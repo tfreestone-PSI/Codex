@@ -1,5 +1,6 @@
 import base64
 import io
+import os
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from PIL import Image, ImageTk
@@ -7,9 +8,12 @@ from openai import OpenAI
 import threading
 
 # ── OpenAI client ──────────────────────────────────────────────
-OPENAI_API_KEY = {your_Key_here}
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+if not OPENAI_API_KEY:
+    raise RuntimeError("OPENAI_API_KEY environment variable not set")
+
 client = OpenAI(api_key=OPENAI_API_KEY)
-MODEL_NAME = "gpt-image-1" # adjust if you use a different model
+MODEL_NAME = "gpt-image-1"  # adjust if you use a different model
 
 # ── Tkinter app ────────────────────────────────────────────────
 class ImageGenGUI(tk.Tk):
